@@ -7,16 +7,6 @@ Be sure to do this.
 
 https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line
 
-## Mac
+## Install/Update
 
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/magnusviri/mysetup/master/mac.sh)"
-
-## Linux
-
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/magnusviri/mysetup/master/linux.sh)"
-
-## Windows
-
-Hahahahaha! ;)
-
-No seriously, when I actually have something to configure I'll add something I'm sure. I better hurry up and start using Windows so I can get to it.
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/magnusviri/mysetup/master/install.sh)"
