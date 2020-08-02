@@ -1,1 +1,17 @@
+.CFUserTextEncoding
 .DS_Store
+.ssh/authorized_keys
+.ssh/id_rsa
+.ssh/id_rsa.pub
+.ssh/known_hosts
+.Trash
+Applications
+Desktop
+Documents
+Downloads
+Dropbox
+Library
+Movies
+Music
+Pictures
+Public
