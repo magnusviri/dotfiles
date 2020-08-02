@@ -40,8 +40,8 @@ fi
 cd /usr/local/bin/
 sudo curl https://getmic.ro | bash
 
-if [ 'full_install' = 'y']; then
-	if test "$uname" = "Darwin"; then
+if [[ "$full_install" == "y" ]]; then
+	if [[ "$uname" == "Darwin" ]]; then
 
 		brew install anaconda3
 		brew install ansible
@@ -101,7 +101,7 @@ if [ 'full_install' = 'y']; then
 
 		# sudo cpan install Spreadsheet::ParseExcel
 
-	elif test "$uname" = "Linux"; then
+	elif [[ "$uname" == "Linux" ]]; then
 		if [ -e /bin/yum ]; then
 
 			yum install tmux
