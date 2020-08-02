@@ -17,12 +17,14 @@ uname="$(uname)"
 ##########################################################################################
 
 if	 [ ! -e /usr/local/bin/ ]; then
+	echo "mkdir -p /usr/local/bin/"
 	sudo mkdir -p /usr/local/bin/
 	sudo chown root:wheel /usr/local/bin/
 	sudo chmod 755 /usr/local/bin/
 fi
 
 if [ ! -e /usr/local/bin/mak.py ]; then
+	echo "curl -o /usr/local/bin/mak.py https://raw.githubusercontent.com/magnusviri/mak.py/master/mak.py"
     sudo curl -o /usr/local/bin/mak.py https://raw.githubusercontent.com/magnusviri/mak.py/master/mak.py
 	sudo chown root:wheel /usr/local/bin/mak.py
 	sudo chmod 755 /usr/local/bin/mak.py
