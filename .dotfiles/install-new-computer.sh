@@ -22,12 +22,13 @@ if	 [ ! -e /usr/local/bin/ ]; then
 	sudo chmod 755 /usr/local/bin/
 fi
 
-if [ -e /usr/local/bin/mak.py ]; then
+if [ ! -e /usr/local/bin/mak.py ]; then
     sudo curl -o /usr/local/bin/mak.py https://raw.githubusercontent.com/magnusviri/mak.py/master/mak.py
 	sudo chown root:wheel /usr/local/bin/mak.py
 	sudo chmod 755 /usr/local/bin/mak.py
 fi
 
+# Brew
 if test ! $(which brew); then
 	echo "Installing Homebrew"
 	if test "$uname" = "Darwin"; then
@@ -37,8 +38,11 @@ if test ! $(which brew); then
 	fi
 fi
 
-cd /usr/local/bin/
-sudo curl https://getmic.ro | bash
+# Micro
+if [ ! -e /usr/local/bin/micro ]; then
+	cd /usr/local/bin/
+	sudo curl https://getmic.ro | bash
+fi
 
 if [[ "$full_install" == "y" ]]; then
 	if [[ "$uname" == "Darwin" ]]; then

@@ -1,10 +1,12 @@
 .CFUserTextEncoding
 .DS_Store
+.gitconfig
 .ssh/authorized_keys
 .ssh/id_rsa
 .ssh/id_rsa.pub
 .ssh/known_hosts
 .Trash
+.zsh_history
 Applications
 Desktop
 Documents
