@@ -12,6 +12,8 @@ done
 echo "Authenticating as admin now."
 sudo echo "I'm root now"
 
+##########################################################################################
+
 uname="$(uname)"
 
 ##########################################################################################
@@ -23,46 +25,65 @@ if	 [ ! -e /usr/local/bin/ ]; then
 	sudo chmod 755 /usr/local/bin/
 fi
 
-if [ ! -e /usr/local/bin/mak.py ]; then
-	echo "curl -o /usr/local/bin/mak.py https://raw.githubusercontent.com/magnusviri/mak.py/master/mak.py"
-    sudo curl -o /usr/local/bin/mak.py https://raw.githubusercontent.com/magnusviri/mak.py/master/mak.py
-	sudo chown root:wheel /usr/local/bin/mak.py
-	sudo chmod 755 /usr/local/bin/mak.py
-fi
-
-# Brew
-if test ! $(which brew); then
-	echo "Installing Homebrew"
-	if test "$uname" = "Darwin"; then
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-	elif test "$uname" = "Linux"; then
-		echo "Do I want brew on Linux?"
-	fi
-fi
-
 # Micro
 if [ ! -e /usr/local/bin/micro ]; then
 	cd /usr/local/bin/
 	sudo curl https://getmic.ro | bash
 fi
 
-if [[ "$full_install" == "y" ]]; then
-	if [[ "$uname" == "Darwin" ]]; then
+if [[ "$uname" == "Darwin" ]]; then
 
+	if [ ! -e /usr/local/bin/mak.py ]; then
+		echo "curl -o /usr/local/bin/mak.py https://raw.githubusercontent.com/magnusviri/mak.py/master/mak.py"
+		sudo curl -o /usr/local/bin/mak.py https://raw.githubusercontent.com/magnusviri/mak.py/master/mak.py
+		sudo chown root:wheel /usr/local/bin/mak.py
+		sudo chmod 755 /usr/local/bin/mak.py
+	fi
+
+	# Brew
+	if test ! $(which brew); then
+		echo "Installing Homebrew"
+		if test "$uname" = "Darwin"; then
+			/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+		elif test "$uname" = "Linux"; then
+			echo "Do I want brew on Linux?"
+		fi
+	fi
+
+	if [[ "$full_install" == "y" ]]; then
 		brew install anaconda3
 		brew install ansible
+		brew install asciinema
 		# brew install autoconf # for radmind
 		brew install cask
+		brew install catimg
+		brew install dutiu
+		#brew install gifsicle # Manipulate GIFs from terminal
 		brew install htop
+		#brew install imagemagick
+		brew install klavaro # GUI typing tutor
+		brew install gtypist # Term typing tutor
+		#brew install lolcat
+		#brew install lua
 		brew install mas
+		#brew install midnight-commander # Terminal Finder
 		brew install npm
 		brew install packer
 		brew install s3cmd
 		brew install telnet
+		#brew install tesseract #OCR software
 		brew install tmux
-		brew install tree
+		#brew install trader # Old game
+		brew install tree # displays directories as trees
+		#brew install webp
 		brew install wget
+		brew install wumpus
 		# brew install speedtest-cli
+		brew install zsh
+		grep /usr/local/bin/zsh /etc/shells
+		if [[ -e "/usr/local/bin/zsh" && "$?" == 1 ]]; then
+			sudo echo /usr/local/bin/zsh >> /etc/shells
+		fi
 
 		sudo easy_install pip
 
@@ -81,6 +102,7 @@ if [[ "$full_install" == "y" ]]; then
 		# Hosts
 
 		# TextAdept
+		open "https://foicica.com/textadept/"
 # 		if [ ! -e /Applications/Textadept.app ]; then
 # 			cd ~/
 # 			curl -O https://foicica.com/textadept/download/textadept_LATEST.osx.zip
@@ -107,28 +129,40 @@ if [[ "$full_install" == "y" ]]; then
 
 		# sudo cpan install Spreadsheet::ParseExcel
 
-	elif [[ "$uname" == "Linux" ]]; then
-		if [ -e /bin/yum ]; then
+		echo "After installing Go2Shell set iTerm2 to default and ls -al to command."
 
-			yum install tmux
+	fi
 
-		fi
-		if [ -e /bin/apt ]; then
+elif [[ "$uname" == "Linux" ]]; then
 
-			sudo apt install tmux
-			sudo apt install snapd
-			sudo snap install brave
+	if [ ! -e /usr/local/bin [; then
+		sudo mkdir -p /usr/local/bin
+	fi
 
-			sudo apt install curl
-			sudo apt install apt-transport-https
-			curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
-			curl https://s3-us-west-2.amazonaws.com/brave-apt/keys.asc | sudo apt-key add -
-			source /etc/os-release
-			echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ $UBUNTU_CODENAME main" | sudo tee
-			/etc/apt/sources.list.d/brave-browser-release-${UBUNTU_CODENAME}.list
-			sudo apt update
+	if [ -e /bin/yum ]; then
 
-		fi
+		yum -y update && yum -y upgrade
+		yum -y install open-vm-tools
+		yum -y install git
+		yum -y install tmux
+		yum -y install rsync
+		#yum -y install nano
+		#yum -y install nftables
+
+	elif [ -e /bin/apt ]; then
+
+		sudo apt install tmux
+		sudo apt install snapd
+		sudo snap install brave
+		sudo apt install curl
+		sudo apt install apt-transport-https
+		curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
+		curl https://s3-us-west-2.amazonaws.com/brave-apt/keys.asc | sudo apt-key add -
+		source /etc/os-release
+		echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ $UBUNTU_CODENAME main" | sudo tee
+		/etc/apt/sources.list.d/brave-browser-release-${UBUNTU_CODENAME}.list
+		sudo apt update
+
 	fi
 fi
 
