@@ -19,6 +19,12 @@ if OSX then
 --    {'ctrl+left', {'ctrl+left', 'ctrl+cmd+b'}, 'ctrl+left'},
 --    {'ctrl+right', {'ctrl+right', 'ctrl+cmd+f'}, 'ctrl+right'},
 
+   keys['cmd+\b'] = buffer.del_word_left
+   keys['alt+\b'] = buffer.del_line_left
+   keys['cmd+shift+\b'] = buffer.del_line_right
+   keys['cmd+del'] = buffer.del_line_right
+   keys['alt+del'] = buffer.del_word_right
+
 end
 
 keys['alt+shift+left'] = keys['ctrl+shift+left']

@@ -51,44 +51,52 @@ if [[ "$uname" == "Darwin" ]]; then
 	fi
 
 	if [[ "$full_install" == "y" ]]; then
-		brew install anaconda3
-		brew install ansible
-		brew install asciinema
-		# brew install autoconf # for radmind
-		brew install cask
-		brew install catimg
-		brew install dutiu
-		#brew install gifsicle # Manipulate GIFs from terminal
-		brew install htop
-		#brew install imagemagick
-		brew install klavaro # GUI typing tutor
-		brew install gtypist # Term typing tutor
-		#brew install lolcat
-		#brew install lua
-		brew install mas
-		#brew install midnight-commander # Terminal Finder
-		brew install npm
-		brew install packer
-		brew install s3cmd
-		brew install telnet
-		#brew install tesseract #OCR software
-		brew install tmux
-		#brew install trader # Old game
-		brew install tree # displays directories as trees
-		#brew install webp
-		brew install wget
-		brew install wumpus
-		# brew install speedtest-cli
-		brew install zsh
+		echo '"anaconda"' | brew bundle install --file=-
+		echo '"ansible"' | brew bundle install --file=-
+		echo '"asciinema"' | brew bundle install --file=-
+		#echo '"autoconf"' | brew bundle install --file=- # for radmind
+		echo '"cask"' | brew bundle install --file=-
+		echo '"catimg"' | brew bundle install --file=-
+		echo '"duti"' | brew bundle install --file=-
+		#echo '"gifsicle"' | brew bundle install --file=- # Manipulate GIFs from terminal
+		echo '"htop"' | brew bundle install --file=-
+		echo '"imagemagick"' | brew bundle install --file=-
+		#echo '"klavaro"' | brew bundle install --file=- # GUI typing tutor
+		#echo '"gtypist"' | brew bundle install --file=- # Term typing tutor
+		echo '"lolcat"' | brew bundle install --file=-
+		echo '"lua"' | brew bundle install --file=-
+		echo '"mas"' | brew bundle install --file=-
+
+		echo '"midnight-commander"' | brew bundle install --file=- # Terminal Finder
+		echo '"npm"' | brew bundle install --file=-
+		echo '"packer"' | brew bundle install --file=-
+		echo '"s3cmd"' | brew bundle install --file=-
+		echo '"telnet"' | brew bundle install --file=-
+		echo '"tesseract"' | brew bundle install --file=- #OCR software
+		echo '"tmux"' | brew bundle install --file=-
+		echo '"trader"' | brew bundle install --file=- # Old game
+		echo '"tree"' | brew bundle install --file=- # displays directories as trees
+		echo '"webp"' | brew bundle install --file=-
+		echo '"wget"' | brew bundle install --file=-
+		echo '"wumpus"' | brew bundle install --file=-
+		echo '"speedtest-cli"' | brew bundle install --file=-
+		echo '"zsh"' | brew bundle install --file=-
+
 		grep /usr/local/bin/zsh /etc/shells
 		if [[ -e "/usr/local/bin/zsh" && "$?" == 1 ]]; then
-			sudo echo /usr/local/bin/zsh >> /etc/shells
+			echo '/usr/local/bin/zsh' | sudo tee -a /etc/shells
 		fi
 
 		sudo easy_install pip
 
-		mas install 508368068 # GetPlainText
-		mas install 497799835 # Xcode
+		if [ ! -e "/Applications/Get Plain Text.app" ]; then
+			mas install 508368068 # GetPlainText
+		fi
+
+		if [ ! -e "/Applications/Xcode.app" ]; then
+			mas install 497799835 # Xcode
+		fi
+
 		#mas 662633568 # BlockheadsServer (1.7.1)
 		#mas 409203825 # Numbers (10.0)
 		#mas 409907375 # Remote Desktop (3.9)
@@ -96,6 +104,7 @@ if [[ "$uname" == "Darwin" ]]; then
 		open "https://zipzapmac.com/Go2Shell"
 
 		#cask "scribus"
+		brew cask install "iterm2"
 
 		#radmind & atari 80, other emulators
 
@@ -130,6 +139,7 @@ if [[ "$uname" == "Darwin" ]]; then
 		# sudo cpan install Spreadsheet::ParseExcel
 
 		echo "After installing Go2Shell set iTerm2 to default and ls -al to command."
+		echo "Fix iTerm2's home, end, page up, page down, cmd-arrow keys."
 
 	fi
 
