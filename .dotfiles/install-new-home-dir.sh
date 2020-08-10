@@ -3,8 +3,6 @@ set -u
 
 uname="$(uname)"
 
-curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
-
 if [[ "$uname" == "Darwin" ]]; then
 
 	if [ -e /usr/local/bin/mak.py ]; then
@@ -89,3 +87,5 @@ elif [[ "$uname" == "Linux" ]]; then
 
 	echo "edit ~/.ssh/authorized_keys"
 fi
+
+curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
