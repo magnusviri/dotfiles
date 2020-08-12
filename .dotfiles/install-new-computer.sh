@@ -51,7 +51,7 @@ if [[ "$uname" == "Darwin" ]]; then
 	fi
 
 	if [[ "$full_install" == "y" ]]; then
-		echo '"anaconda"' | brew bundle install --file=-
+		echo 'cask "anaconda"' | brew bundle install --file=-
 		echo '"ansible"' | brew bundle install --file=-
 		echo '"asciinema"' | brew bundle install --file=-
 		#echo '"autoconf"' | brew bundle install --file=- # for radmind
@@ -82,6 +82,39 @@ if [[ "$uname" == "Darwin" ]]; then
 		echo '"speedtest-cli"' | brew bundle install --file=-
 		echo '"zsh"' | brew bundle install --file=-
 
+# 		brew install anaconda3
+# 		brew install ansible
+# 		brew install asciinema
+# 		# brew install autoconf # for radmind
+# 		brew install cask
+# 		brew install catimg
+# 		brew install dutiu
+# 		#brew install gifsicle # Manipulate GIFs from terminal
+# 		brew install htop
+# 		# brew install httpie # a user-friendly command-line HTTP client for the API era. https://httpie.org/
+#
+# 		#brew install imagemagick
+# 		brew install jq # jq is like sed for JSON datahttps://stedolan.github.io/jq/
+# 		brew install klavaro # GUI typing tutor
+# 		brew install gtypist # Term typing tutor
+# 		#brew install lolcat
+# 		#brew install lua
+# 		brew install mas
+# 		#brew install midnight-commander # Terminal Finder
+# 		brew install npm
+# 		brew install packer
+# 		brew install s3cmd
+# 		brew install telnet
+# 		#brew install tesseract #OCR software
+# 		brew install tmux
+# 		#brew install trader # Old game
+# 		brew install tree # displays directories as trees
+# 		#brew install webp
+# 		brew install wget
+# 		brew install wumpus
+# 		# brew install speedtest-cli
+# 		brew install zsh
+
 		grep /usr/local/bin/zsh /etc/shells
 		if [[ -e "/usr/local/bin/zsh" && "$?" == 1 ]]; then
 			echo '/usr/local/bin/zsh' | sudo tee -a /etc/shells
@@ -105,6 +138,9 @@ if [[ "$uname" == "Darwin" ]]; then
 
 		#cask "scribus"
 		brew cask install "iterm2"
+		brew cask install "bbedit"
+		#musescore
+		#openaudible
 
 		#radmind & atari 80, other emulators
 
