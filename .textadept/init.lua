@@ -1,3 +1,5 @@
+-- https://foicica.com/textadept/api.html
+
 local keys, OSX, GUI, CURSES, _L = keys, OSX, not CURSES, CURSES, _L
 
 -- Switch tab switching to what's common on macOS
@@ -35,6 +37,9 @@ keys['ctrl+shift+left'] = buffer.char_left_rect_extend
 keys['ctrl+shift+right'] = buffer.char_right_rect_extend
 keys['ctrl+shift+up'] = buffer.char_up_rect_extend
 keys['ctrl+shift+down'] = buffer.char_down_rect_extend
+
+keys['cmd+right'] = buffer.line_end_display
+keys['cmd+left'] = buffer.home_display
 
 for key, val in pairs(keys) do
 --print (key, val)
