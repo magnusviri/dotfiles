@@ -14,32 +14,32 @@ if OSX then
    keys['cmd+`'] = m_view[_L['Next View']][2]
    keys['cmd+~'] = m_view[_L['Previous View']][2]
 
-   --keys['cr'] = function() textadept.run.run end
-  keys['alt+left'] = buffer.word_left -- fixes a bug in 11 alpha 3
-  keys['alt+right'] = buffer.word_right -- fixes a bug in 11 alpha 3
+    --keys['cr'] = function() textadept.run.run end
+    keys['alt+left'] = buffer.word_left -- fixes a bug in 11 alpha 3
+    keys['alt+right'] = buffer.word_right -- fixes a bug in 11 alpha 3
 
---    {'ctrl+left', {'ctrl+left', 'ctrl+cmd+b'}, 'ctrl+left'},
---    {'ctrl+right', {'ctrl+right', 'ctrl+cmd+f'}, 'ctrl+right'},
+    --    {'ctrl+left', {'ctrl+left', 'ctrl+cmd+b'}, 'ctrl+left'},
+    --    {'ctrl+right', {'ctrl+right', 'ctrl+cmd+f'}, 'ctrl+right'},
 
-   keys['cmd+\b'] = buffer.del_word_left
-   keys['alt+\b'] = buffer.del_line_left
-   keys['cmd+shift+\b'] = buffer.del_line_right
-   keys['cmd+del'] = buffer.del_line_right
-   keys['alt+del'] = buffer.del_word_right
+    keys['cmd+\b'] = buffer.del_line_left
+    keys['alt+\b'] = buffer.del_word_left
+    keys['cmd+shift+\b'] = buffer.del_line_right
+    keys['cmd+del'] = buffer.del_line_right
+    keys['alt+del'] = buffer.del_word_right
+
+    keys['alt+shift+left'] = keys['ctrl+shift+left']
+    keys['alt+shift+right'] = keys['ctrl+shift+right']
+    keys['alt+shift+up'] = keys['ctrl+shift+up']
+    keys['alt+shift+down'] = keys['ctrl+shift+down']
+    keys['ctrl+shift+left'] = buffer.char_left_rect_extend
+    keys['ctrl+shift+right'] = buffer.char_right_rect_extend
+    keys['ctrl+shift+up'] = buffer.char_up_rect_extend
+    keys['ctrl+shift+down'] = buffer.char_down_rect_extend
+
+    keys['cmd+right'] = buffer.line_end_display
+    keys['cmd+left'] = buffer.home_display
 
 end
-
-keys['alt+shift+left'] = keys['ctrl+shift+left']
-keys['alt+shift+right'] = keys['ctrl+shift+right']
-keys['alt+shift+up'] = keys['ctrl+shift+up']
-keys['alt+shift+down'] = keys['ctrl+shift+down']
-keys['ctrl+shift+left'] = buffer.char_left_rect_extend
-keys['ctrl+shift+right'] = buffer.char_right_rect_extend
-keys['ctrl+shift+up'] = buffer.char_up_rect_extend
-keys['ctrl+shift+down'] = buffer.char_down_rect_extend
-
-keys['cmd+right'] = buffer.line_end_display
-keys['cmd+left'] = buffer.home_display
 
 for key, val in pairs(keys) do
 --print (key, val)
