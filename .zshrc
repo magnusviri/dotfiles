@@ -40,17 +40,22 @@ export PS1="%F{white}<%F{yellow}%n%F{white}@%F{green}%m%F{white}:%F{magenta}%~%F
 
 nvm use v14.15.1
 
-alias npm6="nvm use v14.15.1"
 alias ard='echo sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -restart -agent'
-alias icns2png='sips -s format png \!:1 --out \!:2'
 alias extractAudio='ffmpeg -i \!:1 -vn -acodec copy \!:2'
-alias nano='micro'
-alias pico='micro'
-alias ping='prettyping'
+alias icns2png='sips -s format png \!:1 --out \!:2'
+alias npm6="nvm use v14.15.1"
+
 alias 'cat'='bat'
 alias curl='http'
 alias man='tldr'
+alias nano='micro'
+alias pico='micro'
+alias ping='prettyping'
 alias top='glances'
+
+echo "My aliases: ard extractAudio icns2png npm6"
+echo "Replaced: cat curl man nano pico ping top"
+echo "Extras: asciinema catimg lolcat neofetch nnn prettier socat svg2png svg2icns tmux webp wget wumpus"
 
 export PATH="/usr/local/sbin:$PATH"
 
@@ -58,11 +63,10 @@ export PATH="/usr/local/sbin:$PATH"
 # 3rd party
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
-
-source /usr/local/vic/autocomplete/zsh/vic-machine-darwin
+test -e /usr/local/vic/autocomplete/zsh/vic-machine-darwin && source /usr/local/vic/autocomplete/zsh/vic-machine-darwin || true
 
 ########
 # Adobe will never be my cloud storage...
 
-rmdir "${HOME}/Creative Cloud Files"
-rmdir "${HOME}/Creative Cloud Files/Icon$'\r'"
+test -e "${HOME}/Creative Cloud Files/Icon$'\r'" && rmdir "${HOME}/Creative Cloud Files/Icon$'\r'" || true
+test -e "${HOME}/Creative Cloud Files" && rmdir "${HOME}/Creative Cloud Files" || true
