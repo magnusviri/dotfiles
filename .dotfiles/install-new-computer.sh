@@ -1,6 +1,8 @@
 #!/bin/bash
 set -u
 
+echo "This script should be idempotent and can be run over and over"
+
 # To run this script
 # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/magnusviri/dotfiles/master/.dotfiles/install-new-computer.sh)"
 
@@ -51,69 +53,124 @@ if [[ "$uname" == "Darwin" ]]; then
 	fi
 
 	if [[ "$full_install" == "y" ]]; then
-		echo 'cask "anaconda"' | brew bundle install --file=-
-		echo '"ansible"' | brew bundle install --file=-
-		echo '"asciinema"' | brew bundle install --file=-
-		#echo '"autoconf"' | brew bundle install --file=- # for radmind
-		echo '"cask"' | brew bundle install --file=-
-		echo '"catimg"' | brew bundle install --file=-
-		echo '"duti"' | brew bundle install --file=-
-		#echo '"gifsicle"' | brew bundle install --file=- # Manipulate GIFs from terminal
-		echo '"htop"' | brew bundle install --file=-
-		echo '"imagemagick"' | brew bundle install --file=-
-		#echo '"klavaro"' | brew bundle install --file=- # GUI typing tutor
-		#echo '"gtypist"' | brew bundle install --file=- # Term typing tutor
-		echo '"lolcat"' | brew bundle install --file=-
-		echo '"lua"' | brew bundle install --file=-
-		echo '"mas"' | brew bundle install --file=-
 
-		echo '"midnight-commander"' | brew bundle install --file=- # Terminal Finder
-		echo '"npm"' | brew bundle install --file=-
-		echo '"packer"' | brew bundle install --file=-
-		echo '"s3cmd"' | brew bundle install --file=-
-		echo '"telnet"' | brew bundle install --file=-
-		echo '"tesseract"' | brew bundle install --file=- #OCR software
-		echo '"tmux"' | brew bundle install --file=-
-		echo '"trader"' | brew bundle install --file=- # Old game
-		echo '"tree"' | brew bundle install --file=- # displays directories as trees
-		echo '"webp"' | brew bundle install --file=-
-		echo '"wget"' | brew bundle install --file=-
-		echo '"wumpus"' | brew bundle install --file=-
-		echo '"speedtest-cli"' | brew bundle install --file=-
-		echo '"zsh"' | brew bundle install --file=-
+		brew_formulae='
+			tap "homebrew/bundle"
+			tap "homebrew/cask"
+			tap "homebrew/core"
 
-# 		brew install anaconda3
-# 		brew install ansible
-# 		brew install asciinema
-# 		# brew install autoconf # for radmind
-# 		brew install cask
-# 		brew install catimg
-# 		brew install dutiu
-# 		#brew install gifsicle # Manipulate GIFs from terminal
-# 		brew install htop
-# 		# brew install httpie # a user-friendly command-line HTTP client for the API era. https://httpie.org/
-#
-# 		#brew install imagemagick
-# 		brew install jq # jq is like sed for JSON datahttps://stedolan.github.io/jq/
-# 		brew install klavaro # GUI typing tutor
-# 		brew install gtypist # Term typing tutor
-# 		#brew install lolcat
-# 		#brew install lua
-# 		brew install mas
-# 		#brew install midnight-commander # Terminal Finder
-# 		brew install npm
-# 		brew install packer
-# 		brew install s3cmd
-# 		brew install telnet
-# 		#brew install tesseract #OCR software
-# 		brew install tmux
-# 		#brew install trader # Old game
-# 		brew install tree # displays directories as trees
-# 		#brew install webp
-# 		brew install wget
-# 		brew install wumpus
-# 		# brew install speedtest-cli
-# 		brew install zsh
+			brew "angular-cli"
+			brew "ansible"
+			brew "asciinema"
+			brew "bat"
+			brew "catimg"
+			brew "ffmpeg"
+			brew "glances" # top, disk io, net, etc
+			brew "htop"
+			brew "httpie" # a user-friendly command-line HTTP client for the API era. https://httpie.org/
+			brew "imagemagick"
+			brew "lolcat"
+			brew "lua"
+			brew "mas"
+			brew "micro"
+			brew "minetest"
+			brew "neofetch" # system_profiler like
+			brew "nnn" # File browser
+			brew "prettier"
+			brew "prettyping"
+			brew "python3"
+			brew "socat"
+			brew "svg2png"
+			brew "telnet"
+			brew "tldr"
+			brew "tmux"
+			brew "webp"
+			brew "wget"
+			brew "whalebrew"
+			brew "wumpus"
+			brew "youtube-dl"
+			brew "zsh"
+
+# 			brew "autoconf" # for radmind
+# 			brew "duti"
+# 			brew "freeciv"
+# 			brew "gifsicle" # Manipulate GIFs from terminal
+# 			brew "gnu-typist" # Term typing tutor
+# 			brew "jq" # like sed for JSON datahttps://stedolan.github.io/jq/
+# 			brew "klavaro" # GUI typing tutor
+# 			brew "librsvg"
+# 			brew "mariadb"
+# 			brew "midnight-commander" # Terminal Finder
+# 			brew "packer"
+# 			brew "pacman4console"
+# 			brew "s3cmd"
+# 			brew "speedtest-cli"
+# 			brew "tesseract" #OCR software
+# 			brew "trader" # Old game
+# 			brew "tree" # displays directories as trees
+# 			brew "tty-solitaire"
+
+			cask "anaconda"
+			cask "bbedit"
+			cask "blender"
+			cask "brave-browser"
+			cask "cord"
+			cask "docker"
+			cask "dropbox"
+			cask "firefox"
+			cask "freeorion"
+			cask "go2shell"
+			cask "grandperspective"
+			cask "inkscape" # used for svg2icns
+			cask "iterm2"
+			cask "suspicious-package"
+			cask "textadept"
+			cask "vagrant"
+			cask "vlc"
+			cask "vscodium"
+			cask "wireshark"
+			cask "xquartz"
+			cask "zenmap"
+			cask "zoom"
+
+#			cask "microsoft-office"
+
+# 			cask "mame" #
+# 			cask "milkytracker" #
+# 			cask "musescore" #
+# 			cask "nestopia" #
+# 			cask "openaudible" #
+# 			cask "scribus" #
+# 			cask "virtualc64" #
+
+			mas "1Password 7", id: 1333542190
+			mas "com.alice.mac.GetPlainText", id: 508368068
+			mas "GarageBand", id: 682658836
+			mas "Keynote", id: 409183694
+			mas "Numbers", id: 409203825
+			mas "Remote Desktop", id: 409907375
+			mas "Slack", id: 803453959
+			mas "The Unarchiver", id: 425424353
+			mas "VOX", id: 461369673
+			mas "Xcode", id: 497799835
+
+# 			mas "BlockheadsServer", id: 662633568
+#			mas "WiFi Explorer Lite", id: 1408727408
+'
+
+		echo "$brew_formulae" | brew bundle install --file=-
+
+# If 10.15
+#			cask "vmware-fusion"
+
+#Box
+#extFS for Mac
+#VirtualBox
+#radmind & atari 80, other emulators
+#MountainDuck
+
+		brew cleanup
+		brew doctor --verbose
 
 		grep /usr/local/bin/zsh /etc/shells
 		if [[ -e "/usr/local/bin/zsh" && "$?" == 1 ]]; then
@@ -122,32 +179,16 @@ if [[ "$uname" == "Darwin" ]]; then
 
 		sudo easy_install pip
 
-		if [ ! -e "/Applications/Get Plain Text.app" ]; then
-			mas install 508368068 # GetPlainText
+		if [ ! -e /usr/local/bin/svg2icns ]; then
+			curl -o /usr/local/bin/svg2icns https://raw.githubusercontent.com/magnusviri/svg2icns/main/svg2icns
+			chmod 755 /usr/local/bin/svg2icns
 		fi
 
-		if [ ! -e "/Applications/Xcode.app" ]; then
-			mas install 497799835 # Xcode
-		fi
-
-		#mas 662633568 # BlockheadsServer (1.7.1)
-		#mas 409203825 # Numbers (10.0)
-		#mas 409907375 # Remote Desktop (3.9)
-		#mas 445770608 # Go2Shell --  version is 32-bit, download directly for 64-bit
-		open "https://zipzapmac.com/Go2Shell"
-
-		#cask "scribus"
-		brew cask install "iterm2"
-		brew cask install "bbedit"
-		#musescore
-		#openaudible
-
-		#radmind & atari 80, other emulators
+#		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 
 		# Hosts
 
 		# TextAdept
-		open "https://foicica.com/textadept/"
 # 		if [ ! -e /Applications/Textadept.app ]; then
 # 			cd ~/
 # 			curl -O https://foicica.com/textadept/download/textadept_LATEST.osx.zip
@@ -174,12 +215,20 @@ if [[ "$uname" == "Darwin" ]]; then
 
 		# sudo cpan install Spreadsheet::ParseExcel
 
-		echo "After installing Go2Shell set iTerm2 to default and ls -al to command."
+		echo "Set iTerm2 to default and ls -al to command."
 		echo "Fix iTerm2's home, end, page up, page down, cmd-arrow keys."
 
 	fi
 
 elif [[ "$uname" == "Linux" ]]; then
+
+	# Dropbox
+	#https://www.dropbox.com/install-linux
+	#cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -
+
+	#https://help.dropbox.com/installs-integrations/desktop/linux-commands
+	#deb https://linux.dropbox.com/ubuntu xenial main >> /etc/apt/sources.list
+	#sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E
 
 	if [ ! -e /usr/local/bin [; then
 		sudo mkdir -p /usr/local/bin
