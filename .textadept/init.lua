@@ -65,3 +65,22 @@ timeout(60, function() if buffer.modify then buffer:save() end end)
 --textadept.editing.ver_chars = nil
 --textadept.editing.strip_trailing_spaces = true
 --textadept.editing.comment_string.ansi_c = '//'
+
+-- https://github.com/orbitalquark/textadept/blob/57871e1b1f05ee2d87c07ed6e1bcb86d753f6a43/modules/textadept/editing.lua#L241
+-- Auto-indent on return. This is changed so that it only auto indents if the previous line is indented.
+events.connect(events.CHAR_ADDED, function(code)
+  if not textadept.editing.auto_indent or code ~= string.byte('\n') then return end
+  local line = buffer:line_from_position(buffer.current_pos)
+  if line > 1 and buffer:get_line(line - 1):find('^[\r\n]+$') and
+     buffer:get_line(line):find('^[^\r\n]') then
+    return -- do not auto-indent when pressing enter from start of previous line
+  end
+  local i = line - 1
+  --while i >= 1 and buffer:get_line(i):find('^[\r\n]+$') do i = i - 1 end
+  if i >= 1 then
+    buffer.line_indentation[line] = buffer.line_indentation[i]
+    buffer:vc_home()
+  end
+  return true
+end, 1)
+
