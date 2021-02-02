@@ -1,5 +1,22 @@
 #!/bin/bash
+
 set -u
+
+# See https://github.com/magnusviri/dotfiles for instructions
+
+if [ ! -e "$HOME/.env" ]; then
+	echo Please create "$HOME/.env", see https://github.com/magnusviri/dotfiles for instructions.
+	exit 1
+fi
+
+source "$HOME/.env"
+
+NAME="James Reynolds"
+EMAIL="magnusviri@me.com"
+COMPUTER_NAME="Dad's Computer"
+ADMIN_ACCOUNT="james"
+PERSONAL_ACCOUNT="jeng"
+WORK_ACCOUNT="u0076374"
 
 uname="$(uname)"
 
@@ -43,7 +60,7 @@ if [[ "$uname" == "Darwin" ]]; then
 		#/usr/local/bin/mak.py -q pref Safari.User.Show_Tabs_Status_Favorites=<true|false> - Turns on or off Tab, Status, and Favorites bar; 1 arg; user domain (10.11)
 		#/usr/local/bin/mak.py -q pref Safari.User.WebKitInitialTimedLayoutDelay=<float> - ; 1 arg; user domain (10.11)
 
-		/usr/local/bin/mak.py -q pref ScreenSaver.User.Basic.Message="Dad's Computer"
+		/usr/local/bin/mak.py -q pref ScreenSaver.User.Basic.Message="$COMPUTER_NAME"
 		/usr/local/bin/mak.py -q pref ScreenSaver.User.Computer_Name
 		/usr/local/bin/mak.py -q pref ScreenSaver.User.Computer_Name_Clock
 		/usr/local/bin/mak.py -q pref ScreenSaver.User.askForPassword=1
@@ -58,14 +75,8 @@ if [[ "$uname" == "Darwin" ]]; then
 		chsh -s /usr/local/bin/zsh
 	fi
 
-	if [ ! -e  ~/.gitignore_global ]; then
-		echo .DS_Store > ~/.gitignore_global
-	else
-		echo yes
-	fi
-
-	git config --global user.name "James Reynolds"
-	git config --global user.email "magnusviri@me.com"
+	git config --global user.name "$NAME"
+	git config --global user.email "$EMAIL"
 	#git config --global core.excludesfile ~/.gitignore_global
 
 	echo "Don't forget to fix .ssh/config"
@@ -73,6 +84,10 @@ if [[ "$uname" == "Darwin" ]]; then
 
 	# git clone https://github.com/magnusviri/ta-markdown.git
 	# mv ta-markdown.git markdown
+	# sudo cpan install Spreadsheet::ParseExcel
+
+	# Ignore Catalina
+	softwareupdate --ignore "macOS Catalina"
 
 elif [[ "$uname" == "Linux" ]]; then
 
@@ -82,10 +97,13 @@ elif [[ "$uname" == "Linux" ]]; then
 	chown -R james:james .ssh/
 	chmod -R go-rwx .ssh/
 
-	git config --global user.name "James Reynolds"
-	git config --global user.email "magnusviri@me.com"
+	git config --global user.name "$NAME"
+	git config --global user.email "$EMAIL"
 
 	echo "edit ~/.ssh/authorized_keys"
 fi
 
 curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
+
+
+

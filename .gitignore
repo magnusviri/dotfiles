@@ -13,6 +13,8 @@
 .docker/
 .dropbox/
 .DS_Store
+.env
+.env
 .fontconfig/
 .gem/
 .gitconfig

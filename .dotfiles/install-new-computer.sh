@@ -1,10 +1,22 @@
 #!/bin/bash
+
+# See https://github.com/magnusviri/dotfiles for instructions
+
 set -u
 
-echo "This script should be idempotent and can be run over and over"
+if [ "`id -Gn | grep -w admin`" = "" ]; then
+	echo "You must be admin to run this script"
+	exit 1
+fi
 
-# To run this script
-# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/magnusviri/dotfiles/master/.dotfiles/install-new-computer.sh)"
+if [ ! -e "$HOME/.env" ]; then
+	echo Please create "$HOME/.env", see https://github.com/magnusviri/dotfiles for instructions.
+	exit 1
+fi
+
+source "$HOME/.env"
+
+echo "This script should be idempotent and can be run over and over"
 
 full_install=""
 while [[ "$full_install" != "y" && "$full_install" != "n" ]]; do
@@ -20,6 +32,7 @@ uname="$(uname)"
 
 ##########################################################################################
 
+# Create /usr/local/bin
 if	 [ ! -e /usr/local/bin/ ]; then
 	echo "mkdir -p /usr/local/bin/"
 	sudo mkdir -p /usr/local/bin/
@@ -27,22 +40,18 @@ if	 [ ! -e /usr/local/bin/ ]; then
 	sudo chmod 755 /usr/local/bin/
 fi
 
-# Micro
-if [ ! -e /usr/local/bin/micro ]; then
-	cd /usr/local/bin/
-	sudo curl https://getmic.ro | bash
-fi
-
 if [[ "$uname" == "Darwin" ]]; then
 
+	# Download mak.py
 	if [ ! -e /usr/local/bin/mak.py ]; then
+		echo "Installing mak.py"
 		echo "curl -o /usr/local/bin/mak.py https://raw.githubusercontent.com/magnusviri/mak.py/master/mak.py"
 		sudo curl -o /usr/local/bin/mak.py https://raw.githubusercontent.com/magnusviri/mak.py/master/mak.py
 		sudo chown root:wheel /usr/local/bin/mak.py
 		sudo chmod 755 /usr/local/bin/mak.py
 	fi
 
-	# Brew
+	# Download Brew
 	if test ! $(which brew); then
 		echo "Installing Homebrew"
 		if test "$uname" = "Darwin"; then
@@ -54,13 +63,13 @@ if [[ "$uname" == "Darwin" ]]; then
 
 	if [[ "$full_install" == "y" ]]; then
 
+		# Install lots of stuff (wow, I sure install a lot of stuff now)
+		echo "Running Homebrew"
 		brew_formulae='
 			tap "homebrew/bundle"
 			tap "homebrew/cask"
 			tap "homebrew/core"
 
-			brew "angular-cli"
-			brew "ansible"
 			brew "asciinema"
 			brew "bat"
 			brew "catimg"
@@ -73,7 +82,6 @@ if [[ "$uname" == "Darwin" ]]; then
 			brew "lua"
 			brew "mas"
 			brew "micro"
-			brew "minetest"
 			brew "neofetch" # system_profiler like
 			brew "nnn" # File browser
 			brew "prettier"
@@ -90,10 +98,8 @@ if [[ "$uname" == "Darwin" ]]; then
 			brew "wumpus"
 			brew "youtube-dl"
 			brew "zsh"
-
 # 			brew "autoconf" # for radmind
 # 			brew "duti"
-# 			brew "freeciv"
 # 			brew "gifsicle" # Manipulate GIFs from terminal
 # 			brew "gnu-typist" # Term typing tutor
 # 			brew "jq" # like sed for JSON datahttps://stedolan.github.io/jq/
@@ -102,121 +108,156 @@ if [[ "$uname" == "Darwin" ]]; then
 # 			brew "mariadb"
 # 			brew "midnight-commander" # Terminal Finder
 # 			brew "packer"
-# 			brew "pacman4console"
-# 			brew "s3cmd"
 # 			brew "speedtest-cli"
 # 			brew "tesseract" #OCR software
-# 			brew "trader" # Old game
 # 			brew "tree" # displays directories as trees
-# 			brew "tty-solitaire"
-
-			cask "anaconda"
 			cask "bbedit"
-			cask "blender"
 			cask "brave-browser"
 			cask "cord"
 			cask "docker"
 			cask "dropbox"
 			cask "firefox"
-			cask "freeorion"
 			cask "go2shell"
 			cask "grandperspective"
-			cask "inkscape" # used for svg2icns
 			cask "iterm2"
 			cask "suspicious-package"
 			cask "textadept"
 			cask "vagrant"
+			cask "virtualbox"
 			cask "vlc"
-			cask "vscodium"
 			cask "wireshark"
 			cask "xquartz"
 			cask "zenmap"
 			cask "zoom"
-
-#			cask "microsoft-office"
-
-# 			cask "mame" #
-# 			cask "milkytracker" #
-# 			cask "musescore" #
-# 			cask "nestopia" #
-# 			cask "openaudible" #
-# 			cask "scribus" #
-# 			cask "virtualc64" #
-
-			mas "1Password 7", id: 1333542190
+# 			cask "inkscape" # used for svg2icns
 			mas "com.alice.mac.GetPlainText", id: 508368068
-			mas "GarageBand", id: 682658836
-			mas "Keynote", id: 409183694
 			mas "Numbers", id: 409203825
-			mas "Remote Desktop", id: 409907375
 			mas "Slack", id: 803453959
 			mas "The Unarchiver", id: 425424353
 			mas "VOX", id: 461369673
 			mas "Xcode", id: 497799835
-
-# 			mas "BlockheadsServer", id: 662633568
 #			mas "WiFi Explorer Lite", id: 1408727408
-'
 
+# Work only
+			cask "anaconda"
+			brew "angular-cli"
+			brew "ansible"
+			brew "s3cmd"
+			cask "microsoft-office"
+			cask "microsoft-teams"
+			cask "mountain-duck"
+			cask "paragon-extfs"
+			cask "vscodium"
+			mas "1Password 7", id: 1333542190
+			mas "Keynote", id: 409183694
+			mas "Remote Desktop", id: 409907375
+
+# Personal only
+			brew "minetest"
+# 			brew "freeciv"
+# 			brew "pacman4console"
+# 			brew "trader" # Old game
+# 			brew "tty-solitaire"
+			cask "blender"
+			cask "freeorion"
+# 			cask "mame"
+# 			cask "milkytracker"
+			cask "musescore"
+# 			cask "nestopia"
+# 			cask "openaudible"
+# 			cask "scribus"
+# 			cask "virtualc64"
+			mas "GarageBand", id: 682658836
+# 			mas "BlockheadsServer", id: 662633568
+		'
 		echo "$brew_formulae" | brew bundle install --file=-
 
 # If 10.15
-#			cask "vmware-fusion"
-
-#Box
-#extFS for Mac
-#VirtualBox
-#radmind & atari 80, other emulators
-#MountainDuck
+#	cask "vmware-fusion"
+# Box, radmind & atari 80, other emulators
 
 		brew cleanup
 		brew doctor --verbose
 
+		#######################################################################
+
+		# Remove com.apple.quarantine
+		echo "Removing com.apple.quarantine"
+		IFS='|'
+		quarantined=(
+			"BBEdit.app"
+			"Brave Browser.app"
+			"CoRD.app"
+			"Docker.app"
+			"Dropbox.app"
+			"Go2Shell.app"
+			"GrandPerspective.app"
+			"Inkscape.app"
+			"MAME OS X.app"
+			"MilkyTracker.app"
+			"MuseScore 3.app"
+			"Nestopia.app"
+			"OpenAudible.app"
+			"Remote Desktop.app"
+			"Scribus.app"
+			"Suspicious Package.app"
+			"Textadept.app"
+			"VLC.app"
+			"VSCodium.app"
+			"VirtualC64.app"
+			"Wireshark.app"
+			"iTerm.app"
+		)
+		for app in "${quarantined[@]}"; do :
+		   xattr -cr "/Applications/$app"
+		done
+
+		# Add zsh to list of shells
 		grep /usr/local/bin/zsh /etc/shells
 		if [[ -e "/usr/local/bin/zsh" && "$?" == 1 ]]; then
+			echo "Add zsh to list of shells"
 			echo '/usr/local/bin/zsh' | sudo tee -a /etc/shells
 		fi
 
-		sudo easy_install pip
+		# Download nvm
+		if [ ! -e "$HOME/.nvm" ]; then
+			echo "Installing nvm"
+			curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+		fi
 
+		# TextAdept
+		if [ ! -e /usr/local/bin/textadept ]; then
+			echo "Linking /usr/local/bin/textadept"
+			cd /usr/local/bin/
+			sudo ln -s /Applications/Textadept.app/Contents/MacOS/textadept-curses textadept
+		fi
+
+		# Download svg2icns
 		if [ ! -e /usr/local/bin/svg2icns ]; then
+			echo "Installing svg2icns"
 			curl -o /usr/local/bin/svg2icns https://raw.githubusercontent.com/magnusviri/svg2icns/main/svg2icns
 			chmod 755 /usr/local/bin/svg2icns
 		fi
 
-#		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-
-		# Hosts
-
-		# TextAdept
-# 		if [ ! -e /Applications/Textadept.app ]; then
-# 			cd ~/
-# 			curl -O https://foicica.com/textadept/download/textadept_LATEST.osx.zip
-# 			unzip textadept_LATEST.osx.zip
-# 			rm textadept_LATEST.osx.zip
-# 			sudo mv textadept*.osx/Textadept.app /Applications
-# 			rm -r textadept*.osx
-# 		fi
-# 		if [ ! -e /usr/local/bin/textadept ]; then
-# 			cd /usr/local/bin/
-# 			sudo ln -s /Applications/Textadept.app/Contents/MacOS/textadept-curses textadept
-# 		fi
-
-		sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
-
-		#Remote Desktop grant non-admin rights, and remote desktop remote usage
-
-		# textart
+		# Download textart
 		if [ ! -e /usr/local/bin/textart ]; then
+			echo "Installing textart"
 			sudo curl -o /usr/local/bin//textart https://raw.githubusercontent.com/magnusviri/textart/master/textart
 			sudo chown root:wheel /usr/local/bin/textart
 			sudo chmod 755 /usr/local/bin/textart
 		fi
 
-		# sudo cpan install Spreadsheet::ParseExcel
+		sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
 
+		#Remote Desktop grant non-admin rights, and remote desktop remote usage
+
+		echo
+		echo "-------------------------------------------------"
+		echo
 		echo "Set iTerm2 to default and ls -al to command."
 		echo "Fix iTerm2's home, end, page up, page down, cmd-arrow keys."
+		echo "Install AnyConnect, Adobe CC, Office"
+		echo
 
 	fi
 
